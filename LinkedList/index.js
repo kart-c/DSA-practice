@@ -86,6 +86,82 @@ class LinkedList {
 		this.length++;
 		return this;
 	}
+
+	shift() {
+		if (this.length === 0) return undefined;
+		let temp = this.head;
+		this.head = temp.next;
+		temp.next = null;
+		this.length--;
+		if (this.length === 0) {
+			this.tail = null;
+		}
+		return temp;
+	}
+
+	get(index) {
+		if (index < 0 || index >= this.length) return undefined;
+		let temp = this.head;
+		for (let i = 0; i < index; i++) {
+			temp = temp.next;
+		}
+		return temp;
+	}
+
+	set(value, index) {
+		let temp = this.get(index);
+		if (temp) {
+			temp.value = value;
+			return this;
+		}
+		return undefined;
+	}
+
+	insert(value, index) {
+		if (index < 0 || index > this.length) return undefined;
+		const newNode = new Node(value);
+		if (index === 0) return this.unshift(value);
+		if (index === this.length) return this.push(value);
+
+		let pre = this.get(index);
+		newNode.next = pre.next;
+		pre.next = newNode;
+		this.length++;
+		return this;
+	}
+
+	remove(index) {
+		if (index < 0 || index >= this.length) return undefined;
+		if (index === 0) return this.shift();
+		if (index === this.length - 1) return this.pop();
+
+		// get previous node from node to be removed
+		let pre = this.get(index - 1);
+		// get next node from node to be removed
+		let temp = this.get(index);
+		pre.next = temp.next;
+		temp.next = null;
+		this.length--;
+		return temp;
+	}
+
+	reverse() {
+		let temp = this.head;
+		this.head = this.tail;
+		this.tail = temp;
+		let pre = null;
+		let next = temp.next;
+		for (let i = 0; i < this.length; i++) {
+			next = temp.next;
+			temp.next = pre;
+			pre = temp;
+			temp = next;
+		}
+		return this;
+	}
 }
 
 const myLinkedList = new LinkedList(2);
+myLinkedList.push(3);
+myLinkedList.unshift(1);
+myLinkedList.insert(4, 3);
