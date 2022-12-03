@@ -135,6 +135,23 @@ class DoublyLinkedList {
 		this.length++;
 		return this;
 	}
+
+	remove(index) {
+		if (index < 0 || index >= this.length) return undefined;
+		if (index === 0) return this.shift(value);
+		if (index === this.length - 1) return this.pop(value);
+
+		const temp = this.get(index);
+		const prev = this.get(index - 1);
+
+		prev.next = temp.next;
+		temp.next.prev = temp.prev;
+		temp.next = null;
+		temp.prev = null;
+
+		this.length--;
+		return temp;
+	}
 }
 
 const myDoublyLinkedList = new DoublyLinkedList(1);
