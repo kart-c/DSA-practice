@@ -61,6 +61,7 @@ class BST {
 	}
 
 	contains(value) {
+		if (!this.root) return false;
 		let temp = this.root;
 		while (true) {
 			if (temp.value === value) return true;
